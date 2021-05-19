@@ -102,7 +102,7 @@ cmsDriver.py \
     --eventcontent PREMIXRAW \
     --datatier GEN-SIM-DIGI-RAW \
     --customise HLTrigger/Configuration/customizeHLTforPatatrack.customizeHLTforPatatrackTriplets \
-    --fileout file:QCD_pu.root \
+    --fileout file:scouting.root \
     --pileup_input "dbs:/Neutrino_E-10_gun_14TeV_112X_mcRun3_Flat0To80/mkomm-ML_210512-b09a2eecd62342c3650c8a5512506094/USER,instance=prod/phys03" \
     --procModifiers premix_stage2 \
     --datamix PreMix \
@@ -114,4 +114,19 @@ cmsDriver.py \
     --mc \
     -n 10
 ```
+
+
+### for fragments with randomized parameter
+
+Add the following to cmsDriver to increase the randomization at lumi section transitions
+```
+--customise_commands "process.source.numberEventsInLuminosityBlock = cms.untracked.uint32(100)"
+```
+
+and for consistency also set the same number of events per lumi section in the crab config file:
+```
+config.JobType.eventsPerLumi = 100
+```
+
+
 

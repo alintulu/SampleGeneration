@@ -88,10 +88,7 @@ DECAY   1000016     0.00000000E+00   # snu_tauL decays
 ##### gluino decays - no offshell decays needed
 DECAY   1000021     ${width}   # gluino decays
 #           BR         NDA      ID1       ID2       ID3
-      2.5000000E-01    3     1000022        -1         1   # BR(~gl -> N1 ubar u)
-      2.5000000E-01    3     1000022        -2         2   # BR(~gl -> N1 dbar d)
-      2.5000000E-01    3     1000022        -3         3   # BR(~gl -> N1 sbar s)
-      2.5000000E-01    3     1000022        -4         4   # BR(~gl -> N1 cbar c)
+      1.0000000E+00    3     1000022        -5         5   # BR(~gl -> N1 bbar b)
 DECAY   1000022     0.00000000E+00   # neutralino1 decays
 DECAY   1000023     0.00000000E+00   # neutralino2 decays
 DECAY   1000024     0.00000000E+00   # chargino1+ decays
@@ -121,8 +118,7 @@ for ctau in [1e-1,1e0,1e1,1e2,1e3]:
         scenarios.append({'ctau':ctau,'mgluino':mgluino,'mlsp':mgluino-100})
 
 print len(scenarios)
-        
-        
+
 for scenario in scenarios:
     basePythiaParameters = cms.PSet(
         pythia8CommonSettingsBlock,
@@ -147,7 +143,7 @@ for scenario in scenarios:
         cms.PSet(
             ConfigWeight = cms.double(1.),
             ConfigDescription = cms.string(
-                ('SMS_T1qqqq_mgluino%.1e_mlsp%.1e_ctau%.1e' % (scenario['mgluino'], scenario['mlsp'], scenario['ctau'])).replace('+','')
+                ('SMS_T1bbbb_mgluino%.1e_mlsp%.1e_ctau%.1e' % (scenario['mgluino'], scenario['mlsp'], scenario['ctau'])).replace('+','')
             ),
             SLHATableForPythia8 = cms.string(baseSLHATmpl.substitute(
                 mgluino='%E'%(scenario['mgluino']),
