@@ -130,3 +130,32 @@ config.JobType.eventsPerLumi = 100
 
 
 
+### special instructions for SVJ sample
+* hidden valley broken in pythia 8.303 (CMSSW11X); need to run GEN step in CMSSW102X
+* modify gen jets to account for invisible particles
+
+```
+cmsDriver.py \
+    SampleGeneration/GenFragments/python/SVJ_Zprime_TuneCP5_14TeV_pythia8_cfg.py \
+    --python_filename SVJ_Zprime_TuneCP5_14TeV_pythia8_gen_cfg.py \
+    --eventcontent GENRAW \
+    --datatier GEN \
+    --fileout file:scouting.root \
+    --conditions 102X_upgrade2018_realistic_v11 \
+    --beamspot Realistic25ns13TeVEarly2018Collision \
+    --step GEN \
+    --geometry DB:Extended \
+    --era Run2_2018 \
+    --no_exec \
+    --mc \
+    -n 200 \
+    --customise_commands "process.genParticlesForJetsNoMuNoNu.ignoreParticleIDs.extend([51,52,53])\n\
+     process.genParticlesForJetsNoNu.ignoreParticleIDs.extend([51,52,53])\n\
+     process.genCandidatesForMET.ignoreParticleIDs.extend([51,52,53])\n\
+     process.genParticlesForMETAllVisible.ignoreParticleIDs.extend([51,52,53])\n\
+     process.source.numberEventsInLuminosityBlock = cms.untracked.uint32(100)"
+```
+
+
+
+
