@@ -13,7 +13,7 @@ scram b
 ```
 cmsDriver.py \
     SampleGeneration/GenFragments/python/HWminusJ_HanythingJ_NNPDF31_13TeV_M125_Vhadronic.py \
-    --python_filename hwminus.py \
+    --python_filename SampleGeneration/Analysis/config/HWminusJ_HanythingJ_NNPDF31_13TeV_M125_Vhadronic.py \
     --eventcontent GENRAW \
     --datatier GEN \
     --fileout file:hwminus.root \
@@ -30,10 +30,10 @@ cmsDriver.py \
 ```
 cmsDriver.py \
     SampleGeneration/GenFragments/python/HWminusJ_HanythingJ_NNPDF31_13TeV_M125_Vhadronic.py \
-    --python_filename hwminus.py \
+    --python_filename SampleGeneration/Analysis/config/HWminusJ_HanythingJ_NNPDF31_13TeV_M125_Vhadronic.py \
     --eventcontent NANOAODGEN \
     --datatier NANOAOD \
-    --fileout file:hwminus.root \
+    --fileout file:hwminus-nanogen.root \
     --conditions 112X_mcRun3_2021_realistic_v16 \
     --step LHE,GEN,NANOGEN \
     --geometry DB:Extended \

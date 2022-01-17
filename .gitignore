@@ -1,5 +1,6 @@
-*.pyc
-*.sh
-*.so
-*.a
+**/*.pyc
+**/*.sh
+**/*.so
+**/*.a
 .*
+**/crab_projects*
