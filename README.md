@@ -9,7 +9,9 @@ git clone git@github.com:alintulu/SampleGeneration.git
 scram b
 ```
 
-#### GEN
+## cmsDriver commands
+
+### GEN
 ```
 cmsDriver.py \
     SampleGeneration/GenFragments/python/HWminusJ_HanythingJ_NNPDF31_13TeV_M125_Vhadronic.py \
@@ -26,7 +28,7 @@ cmsDriver.py \
     -n 10
 ```
 
-#### NanoGEN
+### NanoGEN
 ```
 cmsDriver.py \
     SampleGeneration/GenFragments/python/HWminusJ_HanythingJ_NNPDF31_13TeV_M125_Vhadronic.py \
@@ -42,3 +44,12 @@ cmsDriver.py \
     --mc \
     -n 10
 ```
+
+## How to use this repository
+
+1. [Setup directory](#setup)
+2. Add your fragment to [GenFragments/python](GenFragments/python)
+3. Use one of the cmsDriver.py commands above to create a python configuration file. Make sure to change the first line after `cmsDriver.py` to point to your fragment
+4. Create events
+   1. Locally by running `cmsRun [python_filename]`
+   2. With CRAB by going to [Analysis/run](Analysis/run). Change `config.JobType.psetName` to your python configuration file. Submit to crab with `crab submit -c [crab_file]`. Check status with `crab status`
