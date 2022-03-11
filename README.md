@@ -19,7 +19,7 @@ cmsDriver.py \
     --eventcontent GENRAW \
     --datatier GEN \
     --fileout file:hwminus.root \
-    --conditions 112X_mcRun3_2021_realistic_v16 \
+    --conditions auto:phase1_2021_realistic \
     --step LHE,GEN \
     --geometry DB:Extended \
     --era Run3 \
@@ -36,7 +36,7 @@ cmsDriver.py \
     --eventcontent NANOAODGEN \
     --datatier NANOAOD \
     --fileout file:hwminus-nanogen.root \
-    --conditions 112X_mcRun3_2021_realistic_v16 \
+    --conditions auto:phase1_2021_realistic \
     --step LHE,GEN,NANOGEN \
     --geometry DB:Extended \
     --era Run3 \

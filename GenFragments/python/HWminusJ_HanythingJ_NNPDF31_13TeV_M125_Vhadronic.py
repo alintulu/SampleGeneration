@@ -4,7 +4,7 @@ import FWCore.ParameterSet.Config as cms
 # https://github.com/cms-sw/genproductions/blob/abd5e620174f05eada6dac35f9e366f3019fd6ef/bin/Powheg/production/2017/13TeV/Higgs/WminusHJ_HanythingJ_NNPDF31_13TeV/HWminusJ_HanythingJ_NNPDF31_13TeV_M125_Vleptonic.input
 
 externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('root://xrootd-cms.infn.it//store/group/ml/Tagging4ScoutingHackathon/Adelina/HWJ_slc7_amd64_gcc700_CMSSW_10_6_27_HWminusJ.tgz'),
+    args = cms.vstring('root://xrootd-cms.infn.it//store/group/ml/Tagging4ScoutingHackathon/Adelina/DAZSLE/HWJ_slc7_amd64_gcc700_CMSSW_10_6_27_HWminusJ.tgz'),
     nEvents = cms.untracked.uint32(5000),
     numberOfParameters = cms.uint32(1),
     outputFile = cms.string('cmsgrid_final.lhe'),
