@@ -11,7 +11,7 @@ scram b
 
 ## cmsDriver commands
 
-You can find more examples (e.g. how to create miniaod) in `GenFragments/run`.
+You can find more examples (e.g. how to create miniaod) in [GenFragments/run](GenFragments/run).
 
 ### GEN
 ```
