@@ -16,7 +16,7 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
 model = "BulkGraviton_hh_GF_HH_narrow"
 mpoints=[]
 mx = [600, 700, 820, 960, 1120, 1300, 1500]
-mh = [14, 15, 16, 17, 19, 20, 22, 23, 25, 27, 29, 31, 34, 36, 38, 41, 44, 47, 50, 53, 57]
+mh = [34, 38, 44, 47, 50, 53, 57]
 for x in mx:
     for h in mh:
         mpoints.append([x, h])
@@ -25,9 +25,8 @@ for point in mpoints:
     generator.RandomizedParameters.append(
         cms.PSet(
             ConfigWeight = cms.double(1),
-            #GridpackPath = cms.string('root://cms-xrd-global.cern.ch//store/group/ml/Tagging4ScoutingHackathon/Adelina/Run3/gridpacks/BulkGraviton_hh_GF_HH/%s_MX%s_MH%s_slc7_amd64_gcc900_CMSSW_12_0_2_tarball.tar.xz' % (model,point[0], point[1])),
-            GridpackPath = cms.string('/eos/home-l/linacre/gridpacks/13p6TeV/BulkGraviton_hh_GF_HH/gridpacks/%s_MX%s_MH%s_slc7_amd64_gcc900_CMSSW_12_0_2_tarball.tar.xz' % (model,point[0], point[1])),
-            #scriptName = cms.FileInPath('SampleGeneration/GenFragments/data/run_generic_tarball_xrootd.sh'),
+            #GridpackPath = cms.string('/eos/cms/store/cmst3/user/adlintul/run3/gridpacks/bulkgraviton/decayed/%s_MX%s_MH%s_slc7_amd64_gcc900_CMSSW_12_0_2_tarball.tar.xz' % (model,point[0], point[1])),
+            GridpackPath = cms.string('root://cms-xrd-global.cern.ch//store/cmst3/user/adlintul/run3/gridpacks/bulkgraviton/decayed/%s_MX%s_MH%s_slc7_amd64_gcc900_CMSSW_12_0_2_tarball.tar.xz' % (model,point[0], point[1])),
             scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_xrootd.sh'),
             ConfigDescription = cms.string('%s_MX%s_MH%s' % (model, point[0], point[1])),
             PythiaParameters = cms.PSet(
