@@ -2,10 +2,9 @@
 
 ## Setup
 ```
-export SCRAM_ARCH=slc7_amd64_gcc900
-cmsrel CMSSW_11_2_1_Patatrack
-cd CMSSW_11_2_1_Patatrack/src
-git clone git@github.com:alintulu/SampleGeneration.git
+cmsrel CMSSW_12_4_6
+cd CMSSW_12_4_6/src
+git clone git@github.com:alintulu/SampleGeneration.git -b particlenet
 scram b
 ```
 
@@ -13,15 +12,57 @@ scram b
 
 You can find more examples (e.g. how to create miniaod) in [GenFragments/run](GenFragments/run).
 
+### GEN to RAWMINIAOD
+
+#### GEN -> SIM -> DIGI -> RAW (with pileup)
+
+```
+cmsDriver.py \
+    SampleGeneration/GenFragments/python/fragment.py \
+    --python_filename SampleGeneration/Analysis/config/gen2pu.py \
+    --eventcontent RAWSIM \
+    --datatier GEN-SIM-DIGI-RAW \
+    --pileup 2022_LHC_Simulation_10h_2h \
+    --fileout file:gen2pu.root \
+    --pileup_input "dbs:/MinBias_TuneCP5_13p6TeV-pythia8/Run3Summer22GS-124X_mcRun3_2022_realistic_v10-v1/GEN-SIM" \
+    --conditions auto:phase1_2022_realistic \
+    --step GEN,SIM,DIGI,L1,DIGI2RAW,HLT:@relval2022 \
+    --geometry DB:Extended \
+    --era Run3 \
+    --no_exec \
+    --mc \
+    --customise_command "process.source.numberEventsInLuminosityBlock = cms.untracked.uint32(200)" \
+    -n 10
+```
+
+#### RAW -> RAWMINIAOD
+
+```
+cmsDriver.py \
+    step2 \
+    --python_filename SampleGeneration/Analysis/config/pu2rawminiaod.py \
+    --datatier MINIAODSIM \
+    --eventcontent RAWMINIAODSIM \
+    --filein file:gen2pu.root \
+    --conditions auto:phase1_2022_realistic \
+    --step RAW2DIGI,L1Reco,RECO,RECOSIM,PAT \
+    --geometry DB:Extended \
+    --fileout file:pu2rawminiaod.root \
+    --era Run3 \
+    --no_exec \
+    --mc \
+    -n 10
+```
+
 ### GEN
 ```
 cmsDriver.py \
-    SampleGeneration/GenFragments/python/HWminusJ_HanythingJ_NNPDF31_13TeV_M125_Vhadronic.py \
-    --python_filename SampleGeneration/Analysis/config/HWminusJ_HanythingJ_NNPDF31_13TeV_M125_Vhadronic.py \
+    SampleGeneration/GenFragments/python/fragment.py \
+    --python_filename SampleGeneration/Analysis/config/gen.py \
     --eventcontent GENRAW \
     --datatier GEN \
-    --fileout file:hwminus.root \
-    --conditions auto:phase1_2021_realistic \
+    --fileout file:gen.root \
+    --conditions auto:phase1_2022_realistic \
     --step LHE,GEN \
     --geometry DB:Extended \
     --era Run3 \
@@ -33,12 +74,12 @@ cmsDriver.py \
 ### NanoGEN
 ```
 cmsDriver.py \
-    SampleGeneration/GenFragments/python/HWminusJ_HanythingJ_NNPDF31_13TeV_M125_Vhadronic.py \
-    --python_filename SampleGeneration/Analysis/config/HWminusJ_HanythingJ_NNPDF31_13TeV_M125_Vhadronic.py \
+    SampleGeneration/GenFragments/python/fragment.py \
+    --python_filename SampleGeneration/Analysis/config/nanogen.py \
     --eventcontent NANOAODGEN \
     --datatier NANOAOD \
-    --fileout file:hwminus-nanogen.root \
-    --conditions auto:phase1_2021_realistic \
+    --fileout file:nanogen.root \
+    --conditions auto:phase1_2022_realistic \
     --step LHE,GEN,NANOGEN \
     --geometry DB:Extended \
     --era Run3 \

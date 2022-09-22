@@ -2,4 +2,5 @@
 **/*.so
 **/*.a
 .*
-**/crab_projects*
+**/*/crab_projects
+**/*/__pycache__
