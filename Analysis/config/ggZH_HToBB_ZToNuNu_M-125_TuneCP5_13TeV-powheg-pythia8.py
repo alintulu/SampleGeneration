@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: SampleGeneration/GenFragments/python/WminusH_HToBB_WToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.py --python_filename SampleGeneration/Analysis/config/WminusH_HToBB_WToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.py --eventcontent NANOAODGEN --datatier NANOAOD --fileout file:WminusH_HToBB_WToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.root --conditions auto:phase1_2022_realistic --step LHE,GEN,NANOGEN --geometry DB:Extended --era Run3 --no_exec --mc -n 1
+# with command line options: SampleGeneration/GenFragments/python/ggZH_HToBB_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8.py --python_filename SampleGeneration/Analysis/config/ggZH_HToBB_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8.py --eventcontent NANOAODGEN --datatier NANOAOD --fileout file:ggZH_HToBB_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8.root --conditions auto:phase1_2022_realistic --step LHE,GEN,NANOGEN --geometry DB:Extended --era Run3 --no_exec --mc -n 1
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run3_cff import Run3
@@ -64,7 +64,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('SampleGeneration/GenFragments/python/WminusH_HToBB_WToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.py nevts:1'),
+    annotation = cms.untracked.string('SampleGeneration/GenFragments/python/ggZH_HToBB_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8.py nevts:1'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
@@ -81,7 +81,7 @@ process.NANOAODGENoutput = cms.OutputModule("NanoAODOutputModule",
         dataTier = cms.untracked.string('NANOAOD'),
         filterName = cms.untracked.string('')
     ),
-    fileName = cms.untracked.string('file:WminusH_HToBB_WToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.root'),
+    fileName = cms.untracked.string('file:ggZH_HToBB_ZToNuNu_M-125_TuneCP5_13TeV-powheg-pythia8.root'),
     outputCommands = process.NANOAODGENEventContent.outputCommands
 )
 
@@ -92,17 +92,17 @@ process.genstepfilter.triggerConditions=cms.vstring("generation_step")
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2022_realistic', '')
 
-process.generator = cms.EDFilter("Pythia8ConcurrentHadronizerFilter",
+process.generator = cms.EDFilter("Pythia8HadronizerFilter",
     PythiaParameters = cms.PSet(
         parameterSets = cms.vstring(
             'pythia8CommonSettings',
             'pythia8CP5Settings',
-            'pythia8PSweightsSettings',
             'pythia8PowhegEmissionVetoSettings',
+            'pythia8PSweightsSettings',
             'processParameters'
         ),
         processParameters = cms.vstring(
-            'POWHEG:nFinal = 3',
+            'POWHEG:nFinal = 2',
             '25:m0 = 125.0',
             '25:onMode = off',
             '25:onIfMatch = 5 -5'
@@ -170,8 +170,7 @@ process.generator = cms.EDFilter("Pythia8ConcurrentHadronizerFilter",
 
 
 process.externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('root://cms-xrd-global.cern.ch//store/cmst3/user/adlintul/run3/gridpacks/hbb2022/HWJ_slc7_amd64_gcc700_CMSSW_10_2_29_WminusH_HToBB_WToQQ.tgz'),
-    generateConcurrently = cms.untracked.bool(True),
+    args = cms.vstring('root://cms-xrd-global.cern.ch//store/cmst3/user/adlintul/run3/gridpacks/hbb2022/ggHZ_slc7_amd64_gcc700_CMSSW_10_2_29_ggZH_HToBB_ZToNuNu.tgz'),
     nEvents = cms.untracked.uint32(1),
     numberOfParameters = cms.uint32(1),
     outputFile = cms.string('cmsgrid_final.lhe'),
@@ -193,6 +192,10 @@ process.NANOAODGENoutput_step = cms.EndPath(process.NANOAODGENoutput)
 process.schedule = cms.Schedule(process.lhe_step,process.generation_step,process.genfiltersummary_step,process.nanoAOD_step,process.endjob_step,process.NANOAODGENoutput_step)
 from PhysicsTools.PatAlgos.tools.helpers import associatePatAlgosToolsTask
 associatePatAlgosToolsTask(process)
+
+#Setup FWK for multithreaded
+process.options.numberOfConcurrentLuminosityBlocks = 1
+process.options.eventSetup.numberOfConcurrentIOVs = 1
 # filter all path with the production filter sequence
 for path in process.paths:
 	if path in ['lhe_step']: continue

@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: SampleGeneration/GenFragments/python/WminusH_HToBB_WToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.py --python_filename SampleGeneration/Analysis/config/WminusH_HToBB_WToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.py --eventcontent NANOAODGEN --datatier NANOAOD --fileout file:WminusH_HToBB_WToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.root --conditions auto:phase1_2022_realistic --step LHE,GEN,NANOGEN --geometry DB:Extended --era Run3 --no_exec --mc -n 1
+# with command line options: SampleGeneration/GenFragments/python/ggZH_HToBB_ZToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.py --python_filename SampleGeneration/Analysis/config/ggZH_HToBB_ZToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.py --eventcontent NANOAODGEN --datatier NANOAOD --fileout file:ggZH_HToBB_ZToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.root --conditions auto:phase1_2022_realistic --step LHE,GEN,NANOGEN --geometry DB:Extended --era Run3 --no_exec --mc -n 1
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run3_cff import Run3
@@ -64,7 +64,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('SampleGeneration/GenFragments/python/WminusH_HToBB_WToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.py nevts:1'),
+    annotation = cms.untracked.string('SampleGeneration/GenFragments/python/ggZH_HToBB_ZToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.py nevts:1'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
@@ -81,7 +81,7 @@ process.NANOAODGENoutput = cms.OutputModule("NanoAODOutputModule",
         dataTier = cms.untracked.string('NANOAOD'),
         filterName = cms.untracked.string('')
     ),
-    fileName = cms.untracked.string('file:WminusH_HToBB_WToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.root'),
+    fileName = cms.untracked.string('file:ggZH_HToBB_ZToQQ_M-125_TuneCP5_13TeV-powheg-pythia8.root'),
     outputCommands = process.NANOAODGENEventContent.outputCommands
 )
 
@@ -98,11 +98,10 @@ process.generator = cms.EDFilter("Pythia8ConcurrentHadronizerFilter",
             'pythia8CommonSettings',
             'pythia8CP5Settings',
             'pythia8PSweightsSettings',
-            'pythia8PowhegEmissionVetoSettings',
             'processParameters'
         ),
         processParameters = cms.vstring(
-            'POWHEG:nFinal = 3',
+            'POWHEG:nFinal = 2',
             '25:m0 = 125.0',
             '25:onMode = off',
             '25:onIfMatch = 5 -5'
@@ -149,16 +148,6 @@ process.generator = cms.EDFilter("Pythia8ConcurrentHadronizerFilter",
             'UncertaintyBands:overSampleISR = 10.0',
             'UncertaintyBands:FSRpTmin2Fac = 20',
             'UncertaintyBands:ISRpTmin2Fac = 20'
-        ),
-        pythia8PowhegEmissionVetoSettings = cms.vstring(
-            'POWHEG:veto = 1',
-            'POWHEG:pTdef = 1',
-            'POWHEG:emitted = 0',
-            'POWHEG:pTemt = 0',
-            'POWHEG:pThard = 0',
-            'POWHEG:vetoCount = 100',
-            'SpaceShower:pTmaxMatch = 2',
-            'TimeShower:pTmaxMatch = 2'
         )
     ),
     comEnergy = cms.double(13600.0),
@@ -170,7 +159,7 @@ process.generator = cms.EDFilter("Pythia8ConcurrentHadronizerFilter",
 
 
 process.externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('root://cms-xrd-global.cern.ch//store/cmst3/user/adlintul/run3/gridpacks/hbb2022/HWJ_slc7_amd64_gcc700_CMSSW_10_2_29_WminusH_HToBB_WToQQ.tgz'),
+    args = cms.vstring('root://cms-xrd-global.cern.ch//store/cmst3/user/adlintul/run3/gridpacks/hbb2022/ggHZ_slc7_amd64_gcc700_CMSSW_10_2_29_ggZH_HToBB_ZToQQ.tgz'),
     generateConcurrently = cms.untracked.bool(True),
     nEvents = cms.untracked.uint32(1),
     numberOfParameters = cms.uint32(1),
