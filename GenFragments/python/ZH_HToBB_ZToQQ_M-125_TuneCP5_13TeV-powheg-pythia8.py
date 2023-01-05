@@ -4,8 +4,8 @@ import FWCore.ParameterSet.Config as cms
 # https://github.com/cms-sw/genproductions/tree/abd5e620174f05eada6dac35f9e366f3019fd6ef/bin/Powheg/production/2017/13TeV/Higgs/HZJ_HanythingJ_NNPDF31_13TeV
 
 externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('root://cms-xrd-global.cern.ch//store/cmst3/user/adlintul/run3/gridpacks/hbb2022/HZJ_slc7_amd64_gcc820_CMSSW_11_0_1_HZ_QQ_output.tgz'),
-    nEvents = cms.untracked.uint32(10),
+    args = cms.vstring('root://cms-xrd-global.cern.ch//store/cmst3/user/adlintul/run3/gridpacks/hbb2022/HZJ_slc7_amd64_gcc700_CMSSW_10_2_29_ZH_HToBB_ZToQQ.tgz'),
+    nEvents = cms.untracked.uint32(5000),
     generateConcurrently = cms.untracked.bool(True),
     numberOfParameters = cms.uint32(1),
     outputFile = cms.string('cmsgrid_final.lhe'),
